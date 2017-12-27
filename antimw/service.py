@@ -38,12 +38,14 @@ def main():
     
     time.sleep(5)
 
+    antiMW.stop_realtime();
     antiMW.start_ondemand()
 
     time.sleep(5)
 
     antiMW.stop_ondemand()
-
+    antiMW.start_realtime()
+    
     time.sleep(5)
 
     antiMW.stop_realtime()
