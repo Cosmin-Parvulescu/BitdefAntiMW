@@ -82,11 +82,23 @@ class AntiMW():
         self.realtimeCommandQueue = realtimeCommandQueue
         self.eventQueue = eventQueue
 
-        self.realtime = False
-        self.ondemand = False
+        self.ondemandProc = None
+        self.realtimeProc = None
+
+    def __isRealtime(self):
+        if self.realtimeProc is not None:
+            return self.realtimeProc.is_alive()
+
+        return False;
+
+    def __isOndemand(self):
+        if self.ondemandProc is not None:
+            return self.ondemandProc.is_alive()
+
+        return False;
 
     def start_realtime(self):
-        if self.realtime is True:
+        if self.__isRealtime() is True:
             return -1
 
         self.realtime = True
@@ -97,10 +109,8 @@ class AntiMW():
         return 1
 
     def stop_realtime(self):
-        if self.realtime is False:
+        if self.__isRealtime() is False:
             return -1
-
-        self.realtime = False
 
         self.realtimeCommandQueue.put('STOP')
         self.realtimeProc.join()
@@ -108,10 +118,8 @@ class AntiMW():
         return 1
 
     def start_ondemand(self):
-        if self.ondemand is True:
+        if self.__isOndemand() is True:
             return -1
-
-        self.ondemand = True
 
         self.ondemandProc = OnDemandProcess(self.ondemandCommandQueue, self.eventQueue)
         self.ondemandProc.start()
@@ -119,10 +127,8 @@ class AntiMW():
         return 1
 
     def stop_ondemand(self):
-        if self.ondemand is False:
+        if self.__isOndemand() is False:
             return -1
-
-        self.ondemand = False
 
         self.ondemandCommandQueue.put('STOP')
         self.ondemandProc.join()
@@ -130,10 +136,10 @@ class AntiMW():
         return 1
 
     def cleanup(self):
-        if self.ondemand is True:
+        if self.__isOndemand() is True:
             self.ondemandCommandQueue.put('STOP')
             self.ondemandProc.join()
         
-        if self.realtime is True:
+        if self.__isRealtime() is True:
             self.realtimeCommandQueue.put('STOP')
             self.realtimeProc.join()
