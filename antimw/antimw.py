@@ -60,6 +60,14 @@ class RealtimeProcess(Process):
 
     def run(self):
         while True:
+            try:
+                command = self.commandQueue.get_nowait()
+                if command is not None:
+                    if command == 'STOP':
+                        break
+            except Empty:
+                pass
+
             if bool(random.getrandbits(1)):
                 threat = Threat('C:\\honeypot\\' + str(uuid.uuid4()) + '.pdf', 'OS.Threat')
                 threatEvent = ThreatEvent(threat)
@@ -74,16 +82,49 @@ class AntiMW():
         self.realtimeCommandQueue = realtimeCommandQueue
         self.eventQueue = eventQueue
 
+        self.realtime = False
+        self.ondemand = False
+
     def start_realtime(self):
+        if self.realtime is True:
+            return -1
+
+        self.realtime = True
+            
         self.realtimeProc = RealtimeProcess(self.realtimeCommandQueue, self.eventQueue)
         self.realtimeProc.start()
 
+        return 1
+
     def stop_realtime(self):
-        self.realtimeProc.terminate()
+        if self.realtime is False:
+            return -1
+
+        self.realtime = False
+
+        self.realtimeCommandQueue.put('STOP')
+        self.realtimeProc.join()
+
+        return 1
 
     def start_ondemand(self):
+        if self.ondemand is True:
+            return -1
+
+        self.ondemand = True
+
         self.ondemandProc = OnDemandProcess(self.ondemandCommandQueue, self.eventQueue)
         self.ondemandProc.start()
 
+        return 1
+
     def stop_ondemand(self):
+        if self.ondemand is False:
+            return -1
+
+        self.ondemand = False
+
         self.ondemandCommandQueue.put('STOP')
+        self.ondemandProc.join()
+
+        return 1
