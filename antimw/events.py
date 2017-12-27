@@ -1,7 +1,10 @@
+import datetime
+
 class Event(object):
     def __init__(self, evType):
         super(Event, self).__init__()
         self.evType = evType
+        self.datetime = datetime.datetime.utcnow()
 
 class ThreatEvent(Event):
     def __init__(self, threat):       
@@ -16,20 +19,15 @@ class ThreatLogEvent(Event):
         self.threats = threats
 
 class OnDemandStartEvent(Event):
-     def __init__(self, datetime):
+     def __init__(self):
         super(OnDemandStartEvent, self).__init__('ONDEMAND_START')
 
-        self.datetime = datetime
-
 class OnDemandFinishEvent(Event):
-     def __init__(self, datetime):
+     def __init__(self):
         super(OnDemandFinishEvent, self).__init__('ONDEMAND_FINISH')
 
-        self.datetime = datetime
-
 class OnDemandStopEvent(Event):
-     def __init__(self, datetime, reason):
+     def __init__(self, reason):
         super(OnDemandStopEvent, self).__init__('ONDEMAND_STOP')
 
-        self.datetime = datetime
         self.reason = reason

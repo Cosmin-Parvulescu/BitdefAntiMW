@@ -24,7 +24,7 @@ class OnDemandProcess(Process):
 
         threats = []
 
-        self.eventQueue.put(OnDemandStartEvent(datetime.datetime.utcnow()))
+        self.eventQueue.put(OnDemandStartEvent())
 
         stopped = False
 
@@ -34,7 +34,7 @@ class OnDemandProcess(Process):
                 if command is not None:
                     if command == 'STOP':
                         stopped = True
-                        self.eventQueue.put(OnDemandStopEvent(datetime.datetime.utcnow(), 'FORCE'))
+                        self.eventQueue.put(OnDemandStopEvent('FORCE'))
                         break
             except Empty:
                 pass
@@ -46,7 +46,7 @@ class OnDemandProcess(Process):
             time.sleep(1)
 
         if stopped is False:
-            self.eventQueue.put(OnDemandFinishEvent(datetime.datetime.utcnow()))
+            self.eventQueue.put(OnDemandFinishEvent())
 
         threatsEvent = ThreatLogEvent(threats)
         self.eventQueue.put(threatsEvent)

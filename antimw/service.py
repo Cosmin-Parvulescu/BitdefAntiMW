@@ -8,19 +8,22 @@ import datetime
 def printer(eventQueue):
     while True:
         event = eventQueue.get()
+        eventPrettyDate = event.datetime.strftime('%d-%m-%Y %H:%M:%S')
+        eventPrettyPrint = '[' + eventPrettyDate + '][' + event.evType + '] '
 
         if event.evType == 'THREAT_FOUND':
-            print 'REALTIME Threat found at ' + event.threat.path + ' | ' + event.threat.name
+            print eventPrettyPrint + event.threat.path + ' | ' + event.threat.name
         elif event.evType == 'THREATS_FOUND':
-            print 'ONDEMAND Threats found'
+            print eventPrettyPrint
+
             for threat in event.threats:
                 print threat.path + ' | ' + threat.name
         elif event.evType == 'ONDEMAND_START':
-            print 'ONDEMAND scan started at ' + event.datetime.strftime('%d-%m-%Y %H:%M:%S')
+            print eventPrettyPrint
         elif event.evType == 'ONDEMAND_STOP':
-            print 'ONDEMAND scan stopped at ' + event.datetime.strftime('%d-%m-%Y %H:%M:%S') + ' with reason ' + event.reason
+            print eventPrettyPrint + event.reason
         elif event.evType == 'ONDEMAND_FINISH':
-            print 'ONDEMAND scan finished at ' + event.datetime.strftime('%d-%m-%Y %H:%M:%S')
+            print eventPrettyPrint
         else:
             print 'NO HANDLER FOR ' + event.evType
 
