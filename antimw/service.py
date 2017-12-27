@@ -6,27 +6,7 @@ import time
 import datetime
 import sys
 
-def printer(eventQueue):
-    while True:
-        event = eventQueue.get()
-        eventPrettyDate = event.datetime.strftime('%d-%m-%Y %H:%M:%S')
-        eventPrettyPrint = '[' + eventPrettyDate + '][' + event.evType + '] '
-
-        if event.evType == 'THREAT_FOUND':
-            print eventPrettyPrint + event.threat.path + ' | ' + event.threat.name
-        elif event.evType == 'THREATS_FOUND':
-            print eventPrettyPrint
-
-            for threat in event.threats:
-                print threat.path + ' | ' + threat.name
-        elif event.evType == 'ONDEMAND_START':
-            print eventPrettyPrint
-        elif event.evType == 'ONDEMAND_STOP':
-            print eventPrettyPrint + event.reason
-        elif event.evType == 'ONDEMAND_FINISH':
-            print eventPrettyPrint
-        else:
-            print 'NO HANDLER FOR ' + event.evType
+from eventprocessor import EventProcessor
 
 def main():
     try:
@@ -39,15 +19,20 @@ def main():
         realtimeCommandQueue = Queue()
         ondemandCommandQueue = Queue()
 
-        printp = Process(target = printer, args = (eventQueue, ))
-        printp.start()
+        eventProc = EventProcessor()
+        eventProcThread = Process(target = eventProc.process, args = (eventQueue, ))
+        eventProcThread.start()
 
         antiMW = AntiMW(ondemandCommandQueue, realtimeCommandQueue, eventQueue)
+
+        antiMW.start_realtime()
+
+        raw_input()
     except:
         raise
     finally:
         antiMW.cleanup()
-        printp.terminate()
+        eventProcThread.terminate()
 
         print 'Ended service ' + datetime.datetime.utcnow().strftime('%d-%m-%Y %H:%M:%S')
 
