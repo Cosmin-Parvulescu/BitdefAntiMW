@@ -128,3 +128,12 @@ class AntiMW():
         self.ondemandProc.join()
 
         return 1
+
+    def cleanup(self):
+        if self.ondemand is True:
+            self.ondemandCommandQueue.put('STOP')
+            self.ondemandProc.join()
+        
+        if self.realtime is True:
+            self.realtimeCommandQueue.put('STOP')
+            self.realtimeProc.join()
