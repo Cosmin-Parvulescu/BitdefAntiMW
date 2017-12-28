@@ -48,7 +48,7 @@ class IPCAPI(Process):
                     if mwRes == -1:
                         res = 'ALREADY_RUNNING'
                 elif message == 'STOP_ONDEMAND':
-                    mwRes = self.antiMW.start_ondemand()
+                    mwRes = self.antiMW.stop_ondemand()
                     if mwRes == -1:
                         res = 'NOT_RUNNING'
                 else:

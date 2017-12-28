@@ -7,6 +7,9 @@ class IPCAnnouncer(object):
         self.socket = self.context.socket(zmq.PUB)
         self.socket.bind('tcp://*:1405')
 
+    def announce(self, message, evType):
+        self.socket.send(message)
+
     def cleanup(self):
         self.socket.close()
         self.context.term()

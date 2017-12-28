@@ -3,20 +3,27 @@ from Queue import Empty
 
 from ipcannouncer import IPCAnnouncer
 
+from google.protobuf import timestamp_pb2
+
+import antimw_pb2
+
 import time
+import calendar
+import pprint
+import datetime
 
 class Processor(object):
     def __init__(self, name):
         self.name = name
 
-    def process(self, event):
+    def process(self, event, ipcAnnouncer):
         pass
 
 class ConsolePrintProcessor(Processor):
     def __init__(self):
         super(ConsolePrintProcessor, self).__init__('Console Print Processor')
 
-    def process(self, event):
+    def process(self, event, ipcAnnouncer):
         eventPrettyDate = event.datetime.strftime('%d-%m-%Y %H:%M:%S')
         eventPrettyPrint = '[' + eventPrettyDate + '][' + event.evType + '] '
 
@@ -33,6 +40,23 @@ class ConsolePrintProcessor(Processor):
             print eventPrettyPrint + event.reason
         elif event.evType == 'ONDEMAND_FINISH':
             print eventPrettyPrint
+
+class ThreatProcessor(Processor):
+    def __init__(self):
+        super(ThreatProcessor, self).__init__('Threat Processor')
+
+    def process(self, event, ipcAnnouncer):
+        if event.evType == 'THREAT_FOUND':
+            try:
+                threatEventDto = antimw_pb2.ThreatEventDto()
+                threatEventDto.eventType = event.evType
+                threatEventDto.timestamp.FromDatetime(event.datetime)
+                threatEventDto.threatPath = event.threat.path
+                threatEventDto.threatName = event.threat.name
+            except Exception, e:
+                print str(e)
+
+            ipcAnnouncer.announce(threatEventDto.SerializeToString(), event.evType)
             
 class EventSink(Process):
     def __init__(self, eventQueue):
@@ -40,7 +64,7 @@ class EventSink(Process):
 
         self.commandQueue = Queue()
 
-        self.processors = [ConsolePrintProcessor()]
+        self.processors = [ConsolePrintProcessor(), ThreatProcessor()]
         self.eventQueue = eventQueue
 
     def run(self):
@@ -60,11 +84,10 @@ class EventSink(Process):
                 if event is not None:
                     for processor in self.processors:
                         try:
-                            processor.process(event)
-                        except:
+                            processor.process(event, ipcAnnouncer)
+                        except Exception, e:
                             # Can add an event queue so we don't lose them...
                             print 'Processing failed on ' + processor.name
-                            pass
             except Empty:
                 pass
 
