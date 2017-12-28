@@ -15,13 +15,13 @@ namespace AntiMwSdk.Cli
 
             try
             {
+                Console.WriteLine($"{ client.StartRealTime() }");
+
+                Thread.Sleep(5000);
+
                 Console.WriteLine($"{ client.StartOnDemand() }");
 
-                Thread.Sleep(2500);
-
-                Console.WriteLine($"{ client.StopOnDemand() }");
-
-                Thread.Sleep(2500);
+                Thread.Sleep(30000);
             }
             finally
             {

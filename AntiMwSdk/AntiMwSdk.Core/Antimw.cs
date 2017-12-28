@@ -25,20 +25,386 @@ namespace Antimwpb {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "CgxhbnRpbXcucHJvdG8SCGFudGltd3BiGh9nb29nbGUvcHJvdG9idWYvdGlt",
-            "ZXN0YW1wLnByb3RvInoKDlRocmVhdEV2ZW50RHRvEhEKCWV2ZW50VHlwZRgB",
-            "IAEoCRItCgl0aW1lc3RhbXAYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGlt",
-            "ZXN0YW1wEhIKCnRocmVhdFBhdGgYAyABKAkSEgoKdGhyZWF0TmFtZRgEIAEo",
-            "CWIGcHJvdG8z"));
+            "ZXN0YW1wLnByb3RvIoUBCgpNZXNzYWdlRHRvEjIKDnRocmVhdEV2ZW50RHRv",
+            "GAEgASgLMhguYW50aW13cGIuVGhyZWF0RXZlbnREdG9IABI4ChF0aHJlYXRM",
+            "b2dFdmVudER0bxgCIAEoCzIbLmFudGltd3BiLlRocmVhdExvZ0V2ZW50RHRv",
+            "SABCCQoHbWVzc2FnZSJ1ChFUaHJlYXRMb2dFdmVudER0bxItCgl0aW1lc3Rh",
+            "bXAYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjEKD3RocmVh",
+            "dEV2ZW50RHRvcxgCIAMoCzIYLmFudGltd3BiLlRocmVhdEV2ZW50RHRvImcK",
+            "DlRocmVhdEV2ZW50RHRvEi0KCXRpbWVzdGFtcBgBIAEoCzIaLmdvb2dsZS5w",
+            "cm90b2J1Zi5UaW1lc3RhbXASEgoKdGhyZWF0UGF0aBgCIAEoCRISCgp0aHJl",
+            "YXROYW1lGAMgASgJYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Antimwpb.ThreatEventDto), global::Antimwpb.ThreatEventDto.Parser, new[]{ "EventType", "Timestamp", "ThreatPath", "ThreatName" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Antimwpb.MessageDto), global::Antimwpb.MessageDto.Parser, new[]{ "ThreatEventDto", "ThreatLogEventDto" }, new[]{ "Message" }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Antimwpb.ThreatLogEventDto), global::Antimwpb.ThreatLogEventDto.Parser, new[]{ "Timestamp", "ThreatEventDtos" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Antimwpb.ThreatEventDto), global::Antimwpb.ThreatEventDto.Parser, new[]{ "Timestamp", "ThreatPath", "ThreatName" }, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Messages
+  public sealed partial class MessageDto : pb::IMessage<MessageDto> {
+    private static readonly pb::MessageParser<MessageDto> _parser = new pb::MessageParser<MessageDto>(() => new MessageDto());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MessageDto> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Antimwpb.AntimwReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MessageDto() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MessageDto(MessageDto other) : this() {
+      switch (other.MessageCase) {
+        case MessageOneofCase.ThreatEventDto:
+          ThreatEventDto = other.ThreatEventDto.Clone();
+          break;
+        case MessageOneofCase.ThreatLogEventDto:
+          ThreatLogEventDto = other.ThreatLogEventDto.Clone();
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MessageDto Clone() {
+      return new MessageDto(this);
+    }
+
+    /// <summary>Field number for the "threatEventDto" field.</summary>
+    public const int ThreatEventDtoFieldNumber = 1;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Antimwpb.ThreatEventDto ThreatEventDto {
+      get { return messageCase_ == MessageOneofCase.ThreatEventDto ? (global::Antimwpb.ThreatEventDto) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.ThreatEventDto;
+      }
+    }
+
+    /// <summary>Field number for the "threatLogEventDto" field.</summary>
+    public const int ThreatLogEventDtoFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Antimwpb.ThreatLogEventDto ThreatLogEventDto {
+      get { return messageCase_ == MessageOneofCase.ThreatLogEventDto ? (global::Antimwpb.ThreatLogEventDto) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.ThreatLogEventDto;
+      }
+    }
+
+    private object message_;
+    /// <summary>Enum of possible cases for the "message" oneof.</summary>
+    public enum MessageOneofCase {
+      None = 0,
+      ThreatEventDto = 1,
+      ThreatLogEventDto = 2,
+    }
+    private MessageOneofCase messageCase_ = MessageOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MessageOneofCase MessageCase {
+      get { return messageCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void ClearMessage() {
+      messageCase_ = MessageOneofCase.None;
+      message_ = null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MessageDto);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MessageDto other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(ThreatEventDto, other.ThreatEventDto)) return false;
+      if (!object.Equals(ThreatLogEventDto, other.ThreatLogEventDto)) return false;
+      if (MessageCase != other.MessageCase) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (messageCase_ == MessageOneofCase.ThreatEventDto) hash ^= ThreatEventDto.GetHashCode();
+      if (messageCase_ == MessageOneofCase.ThreatLogEventDto) hash ^= ThreatLogEventDto.GetHashCode();
+      hash ^= (int) messageCase_;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (messageCase_ == MessageOneofCase.ThreatEventDto) {
+        output.WriteRawTag(10);
+        output.WriteMessage(ThreatEventDto);
+      }
+      if (messageCase_ == MessageOneofCase.ThreatLogEventDto) {
+        output.WriteRawTag(18);
+        output.WriteMessage(ThreatLogEventDto);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (messageCase_ == MessageOneofCase.ThreatEventDto) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ThreatEventDto);
+      }
+      if (messageCase_ == MessageOneofCase.ThreatLogEventDto) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ThreatLogEventDto);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MessageDto other) {
+      if (other == null) {
+        return;
+      }
+      switch (other.MessageCase) {
+        case MessageOneofCase.ThreatEventDto:
+          if (ThreatEventDto == null) {
+            ThreatEventDto = new global::Antimwpb.ThreatEventDto();
+          }
+          ThreatEventDto.MergeFrom(other.ThreatEventDto);
+          break;
+        case MessageOneofCase.ThreatLogEventDto:
+          if (ThreatLogEventDto == null) {
+            ThreatLogEventDto = new global::Antimwpb.ThreatLogEventDto();
+          }
+          ThreatLogEventDto.MergeFrom(other.ThreatLogEventDto);
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            global::Antimwpb.ThreatEventDto subBuilder = new global::Antimwpb.ThreatEventDto();
+            if (messageCase_ == MessageOneofCase.ThreatEventDto) {
+              subBuilder.MergeFrom(ThreatEventDto);
+            }
+            input.ReadMessage(subBuilder);
+            ThreatEventDto = subBuilder;
+            break;
+          }
+          case 18: {
+            global::Antimwpb.ThreatLogEventDto subBuilder = new global::Antimwpb.ThreatLogEventDto();
+            if (messageCase_ == MessageOneofCase.ThreatLogEventDto) {
+              subBuilder.MergeFrom(ThreatLogEventDto);
+            }
+            input.ReadMessage(subBuilder);
+            ThreatLogEventDto = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ThreatLogEventDto : pb::IMessage<ThreatLogEventDto> {
+    private static readonly pb::MessageParser<ThreatLogEventDto> _parser = new pb::MessageParser<ThreatLogEventDto>(() => new ThreatLogEventDto());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ThreatLogEventDto> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Antimwpb.AntimwReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ThreatLogEventDto() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ThreatLogEventDto(ThreatLogEventDto other) : this() {
+      Timestamp = other.timestamp_ != null ? other.Timestamp.Clone() : null;
+      threatEventDtos_ = other.threatEventDtos_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ThreatLogEventDto Clone() {
+      return new ThreatLogEventDto(this);
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 1;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp timestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "threatEventDtos" field.</summary>
+    public const int ThreatEventDtosFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::Antimwpb.ThreatEventDto> _repeated_threatEventDtos_codec
+        = pb::FieldCodec.ForMessage(18, global::Antimwpb.ThreatEventDto.Parser);
+    private readonly pbc::RepeatedField<global::Antimwpb.ThreatEventDto> threatEventDtos_ = new pbc::RepeatedField<global::Antimwpb.ThreatEventDto>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Antimwpb.ThreatEventDto> ThreatEventDtos {
+      get { return threatEventDtos_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ThreatLogEventDto);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ThreatLogEventDto other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Timestamp, other.Timestamp)) return false;
+      if(!threatEventDtos_.Equals(other.threatEventDtos_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
+      hash ^= threatEventDtos_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (timestamp_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Timestamp);
+      }
+      threatEventDtos_.WriteTo(output, _repeated_threatEventDtos_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (timestamp_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Timestamp);
+      }
+      size += threatEventDtos_.CalculateSize(_repeated_threatEventDtos_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ThreatLogEventDto other) {
+      if (other == null) {
+        return;
+      }
+      if (other.timestamp_ != null) {
+        if (timestamp_ == null) {
+          timestamp_ = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        Timestamp.MergeFrom(other.Timestamp);
+      }
+      threatEventDtos_.Add(other.threatEventDtos_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (timestamp_ == null) {
+              timestamp_ = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(timestamp_);
+            break;
+          }
+          case 18: {
+            threatEventDtos_.AddEntriesFrom(input, _repeated_threatEventDtos_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class ThreatEventDto : pb::IMessage<ThreatEventDto> {
     private static readonly pb::MessageParser<ThreatEventDto> _parser = new pb::MessageParser<ThreatEventDto>(() => new ThreatEventDto());
     private pb::UnknownFieldSet _unknownFields;
@@ -47,7 +413,7 @@ namespace Antimwpb {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Antimwpb.AntimwReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Antimwpb.AntimwReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -64,7 +430,6 @@ namespace Antimwpb {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ThreatEventDto(ThreatEventDto other) : this() {
-      eventType_ = other.eventType_;
       Timestamp = other.timestamp_ != null ? other.Timestamp.Clone() : null;
       threatPath_ = other.threatPath_;
       threatName_ = other.threatName_;
@@ -76,19 +441,8 @@ namespace Antimwpb {
       return new ThreatEventDto(this);
     }
 
-    /// <summary>Field number for the "eventType" field.</summary>
-    public const int EventTypeFieldNumber = 1;
-    private string eventType_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string EventType {
-      get { return eventType_; }
-      set {
-        eventType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 2;
+    public const int TimestampFieldNumber = 1;
     private global::Google.Protobuf.WellKnownTypes.Timestamp timestamp_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Google.Protobuf.WellKnownTypes.Timestamp Timestamp {
@@ -99,7 +453,7 @@ namespace Antimwpb {
     }
 
     /// <summary>Field number for the "threatPath" field.</summary>
-    public const int ThreatPathFieldNumber = 3;
+    public const int ThreatPathFieldNumber = 2;
     private string threatPath_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string ThreatPath {
@@ -110,7 +464,7 @@ namespace Antimwpb {
     }
 
     /// <summary>Field number for the "threatName" field.</summary>
-    public const int ThreatNameFieldNumber = 4;
+    public const int ThreatNameFieldNumber = 3;
     private string threatName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string ThreatName {
@@ -133,7 +487,6 @@ namespace Antimwpb {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (EventType != other.EventType) return false;
       if (!object.Equals(Timestamp, other.Timestamp)) return false;
       if (ThreatPath != other.ThreatPath) return false;
       if (ThreatName != other.ThreatName) return false;
@@ -143,7 +496,6 @@ namespace Antimwpb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (EventType.Length != 0) hash ^= EventType.GetHashCode();
       if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
       if (ThreatPath.Length != 0) hash ^= ThreatPath.GetHashCode();
       if (ThreatName.Length != 0) hash ^= ThreatName.GetHashCode();
@@ -160,20 +512,16 @@ namespace Antimwpb {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (EventType.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(EventType);
-      }
       if (timestamp_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(10);
         output.WriteMessage(Timestamp);
       }
       if (ThreatPath.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(ThreatPath);
       }
       if (ThreatName.Length != 0) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(26);
         output.WriteString(ThreatName);
       }
       if (_unknownFields != null) {
@@ -184,9 +532,6 @@ namespace Antimwpb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (EventType.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(EventType);
-      }
       if (timestamp_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Timestamp);
       }
@@ -206,9 +551,6 @@ namespace Antimwpb {
     public void MergeFrom(ThreatEventDto other) {
       if (other == null) {
         return;
-      }
-      if (other.EventType.Length != 0) {
-        EventType = other.EventType;
       }
       if (other.timestamp_ != null) {
         if (timestamp_ == null) {
@@ -234,21 +576,17 @@ namespace Antimwpb {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            EventType = input.ReadString();
-            break;
-          }
-          case 18: {
             if (timestamp_ == null) {
               timestamp_ = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(timestamp_);
             break;
           }
-          case 26: {
+          case 18: {
             ThreatPath = input.ReadString();
             break;
           }
-          case 34: {
+          case 26: {
             ThreatName = input.ReadString();
             break;
           }

@@ -46,17 +46,21 @@ class ThreatProcessor(Processor):
         super(ThreatProcessor, self).__init__('Threat Processor')
 
     def process(self, event, ipcAnnouncer):
-        if event.evType == 'THREAT_FOUND':
-            try:
-                threatEventDto = antimw_pb2.ThreatEventDto()
-                threatEventDto.eventType = event.evType
-                threatEventDto.timestamp.FromDatetime(event.datetime)
-                threatEventDto.threatPath = event.threat.path
-                threatEventDto.threatName = event.threat.name
-            except Exception, e:
-                print str(e)
+        messageDto = antimw_pb2.MessageDto()
 
-            ipcAnnouncer.announce(threatEventDto.SerializeToString(), event.evType)
+        if event.evType == 'THREAT_FOUND':
+            messageDto.threatEventDto.timestamp.FromDatetime(event.datetime)
+            messageDto.threatEventDto.threatPath = event.threat.path
+            messageDto.threatEventDto.threatName = event.threat.name
+
+        elif event.evType == 'THREATS_FOUND':
+            messageDto.threatLogEventDto.timestamp.FromDatetime(event.datetime)
+            for threat in event.threats:
+                threatDto = messageDto.threatLogEventDto.threatEventDtos.add()
+                threatDto.threatPath = threat.path
+                threatDto.threatName = threat.name
+
+        ipcAnnouncer.announce(messageDto.SerializeToString())
             
 class EventSink(Process):
     def __init__(self, eventQueue):

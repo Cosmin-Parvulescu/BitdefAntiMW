@@ -48,13 +48,23 @@ namespace AntiMwSdk.Core
                             {
                                 var replyBytes = replyFrame.Read();
 
-                                var threatEventDto = ThreatEventDto.Parser.ParseFrom(replyBytes);
+                                var messageDto = MessageDto.Parser.ParseFrom(replyBytes);
+                                switch (messageDto.MessageCase)
+                                {
+                                    case MessageDto.MessageOneofCase.ThreatEventDto:
+                                        _threadHandler.Handle(messageDto.ThreatEventDto);
 
-                                _threadHandler.Handle(threatEventDto);
+                                        break;
+
+                                    case MessageDto.MessageOneofCase.ThreatLogEventDto:
+                                        _threadHandler.Handle(messageDto.ThreatLogEventDto);
+
+                                        break;
+                                }
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
