@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='antimw.proto',
   package='antimwpb',
   syntax='proto3',
-  serialized_pb=_b('\n\x0c\x61ntimw.proto\x12\x08\x61ntimwpb\x1a\x1fgoogle/protobuf/timestamp.proto\"\x85\x01\n\nMessageDto\x12\x32\n\x0ethreatEventDto\x18\x01 \x01(\x0b\x32\x18.antimwpb.ThreatEventDtoH\x00\x12\x38\n\x11threatLogEventDto\x18\x02 \x01(\x0b\x32\x1b.antimwpb.ThreatLogEventDtoH\x00\x42\t\n\x07message\"u\n\x11ThreatLogEventDto\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x0fthreatEventDtos\x18\x02 \x03(\x0b\x32\x18.antimwpb.ThreatEventDto\"g\n\x0eThreatEventDto\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nthreatPath\x18\x02 \x01(\t\x12\x12\n\nthreatName\x18\x03 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0c\x61ntimw.proto\x12\x08\x61ntimwpb\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb3\x01\n\nMessageDto\x12\x32\n\x0ethreatEventDto\x18\x01 \x01(\x0b\x32\x18.antimwpb.ThreatEventDtoH\x00\x12\x38\n\x11threatLogEventDto\x18\x02 \x01(\x0b\x32\x1b.antimwpb.ThreatLogEventDtoH\x00\x12,\n\x0blogEventDto\x18\x03 \x01(\x0b\x32\x15.antimwpb.LogEventDtoH\x00\x42\t\n\x07message\"g\n\x0bLogEventDto\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x11\n\teventType\x18\x02 \x01(\t\x12\x16\n\x0e\x61\x64\x64itionalText\x18\x03 \x01(\t\"u\n\x11ThreatLogEventDto\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x31\n\x0fthreatEventDtos\x18\x02 \x03(\x0b\x32\x18.antimwpb.ThreatEventDto\"g\n\x0eThreatEventDto\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x12\n\nthreatPath\x18\x02 \x01(\t\x12\x12\n\nthreatName\x18\x03 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -48,6 +48,13 @@ _MESSAGEDTO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='logEventDto', full_name='antimwpb.MessageDto.logEventDto', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -64,7 +71,52 @@ _MESSAGEDTO = _descriptor.Descriptor(
       index=0, containing_type=None, fields=[]),
   ],
   serialized_start=60,
-  serialized_end=193,
+  serialized_end=239,
+)
+
+
+_LOGEVENTDTO = _descriptor.Descriptor(
+  name='LogEventDto',
+  full_name='antimwpb.LogEventDto',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='timestamp', full_name='antimwpb.LogEventDto.timestamp', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='eventType', full_name='antimwpb.LogEventDto.eventType', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='additionalText', full_name='antimwpb.LogEventDto.additionalText', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=241,
+  serialized_end=344,
 )
 
 
@@ -101,8 +153,8 @@ _THREATLOGEVENTDTO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=195,
-  serialized_end=312,
+  serialized_start=346,
+  serialized_end=463,
 )
 
 
@@ -146,22 +198,28 @@ _THREATEVENTDTO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=314,
-  serialized_end=417,
+  serialized_start=465,
+  serialized_end=568,
 )
 
 _MESSAGEDTO.fields_by_name['threatEventDto'].message_type = _THREATEVENTDTO
 _MESSAGEDTO.fields_by_name['threatLogEventDto'].message_type = _THREATLOGEVENTDTO
+_MESSAGEDTO.fields_by_name['logEventDto'].message_type = _LOGEVENTDTO
 _MESSAGEDTO.oneofs_by_name['message'].fields.append(
   _MESSAGEDTO.fields_by_name['threatEventDto'])
 _MESSAGEDTO.fields_by_name['threatEventDto'].containing_oneof = _MESSAGEDTO.oneofs_by_name['message']
 _MESSAGEDTO.oneofs_by_name['message'].fields.append(
   _MESSAGEDTO.fields_by_name['threatLogEventDto'])
 _MESSAGEDTO.fields_by_name['threatLogEventDto'].containing_oneof = _MESSAGEDTO.oneofs_by_name['message']
+_MESSAGEDTO.oneofs_by_name['message'].fields.append(
+  _MESSAGEDTO.fields_by_name['logEventDto'])
+_MESSAGEDTO.fields_by_name['logEventDto'].containing_oneof = _MESSAGEDTO.oneofs_by_name['message']
+_LOGEVENTDTO.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _THREATLOGEVENTDTO.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _THREATLOGEVENTDTO.fields_by_name['threatEventDtos'].message_type = _THREATEVENTDTO
 _THREATEVENTDTO.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 DESCRIPTOR.message_types_by_name['MessageDto'] = _MESSAGEDTO
+DESCRIPTOR.message_types_by_name['LogEventDto'] = _LOGEVENTDTO
 DESCRIPTOR.message_types_by_name['ThreatLogEventDto'] = _THREATLOGEVENTDTO
 DESCRIPTOR.message_types_by_name['ThreatEventDto'] = _THREATEVENTDTO
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -172,6 +230,13 @@ MessageDto = _reflection.GeneratedProtocolMessageType('MessageDto', (_message.Me
   # @@protoc_insertion_point(class_scope:antimwpb.MessageDto)
   ))
 _sym_db.RegisterMessage(MessageDto)
+
+LogEventDto = _reflection.GeneratedProtocolMessageType('LogEventDto', (_message.Message,), dict(
+  DESCRIPTOR = _LOGEVENTDTO,
+  __module__ = 'antimw_pb2'
+  # @@protoc_insertion_point(class_scope:antimwpb.LogEventDto)
+  ))
+_sym_db.RegisterMessage(LogEventDto)
 
 ThreatLogEventDto = _reflection.GeneratedProtocolMessageType('ThreatLogEventDto', (_message.Message,), dict(
   DESCRIPTOR = _THREATLOGEVENTDTO,

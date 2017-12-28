@@ -60,6 +60,11 @@ namespace AntiMwSdk.Core
                                         _threadHandler.Handle(messageDto.ThreatLogEventDto);
 
                                         break;
+
+                                    case MessageDto.MessageOneofCase.LogEventDto:
+                                        _threadHandler.Handle(messageDto.LogEventDto);
+
+                                        break;
                                 }
                             }
                         }

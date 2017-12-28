@@ -7,6 +7,7 @@ namespace AntiMwSdk.Core
     {
         void Handle(ThreatEventDto threatEventDto);
         void Handle(ThreatLogEventDto threatLogEventDto);
+        void Handle(LogEventDto logEventDto);
     }
 
     public class ThreatHandler : IThreatHandler
@@ -23,6 +24,11 @@ namespace AntiMwSdk.Core
             {
                 Handle(threatLog);
             }
+        }
+
+        public void Handle(LogEventDto logEventDto)
+        {
+            Console.WriteLine($"[{ logEventDto.Timestamp?.ToDateTime().ToLocalTime() }] Server event ({ logEventDto.EventType }) { logEventDto.AdditionalText }" );
         }
     }
 }

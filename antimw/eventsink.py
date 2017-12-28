@@ -61,14 +61,34 @@ class ThreatProcessor(Processor):
                 threatDto.threatName = threat.name
 
         ipcAnnouncer.announce(messageDto.SerializeToString())
-            
+
+class LogEventProcessor(Processor):
+    def __init__(self):
+        super(LogEventProcessor, self).__init__('Log Event Processor')
+
+    def process(self, event, ipcAnnouncer):
+        messageDto = antimw_pb2.MessageDto()
+        if event.evType == 'ONDEMAND_START':
+            messageDto.logEventDto.timestamp.FromDatetime(event.datetime)
+            messageDto.logEventDto.eventType = event.evType
+        elif event.evType == 'ONDEMAND_FINISH':
+            pprint.pprint(event)
+            messageDto.logEventDto.timestamp.FromDatetime(event.datetime)
+            messageDto.logEventDto.eventType = event.evType
+        elif event.evType == 'ONDEMAND_STOP':
+            messageDto.logEventDto.timestamp.FromDatetime(event.datetime)
+            messageDto.logEventDto.eventType = event.evType
+            messageDto.logEventDto.additionalText = event.reason
+
+        ipcAnnouncer.announce(messageDto.SerializeToString())
+
 class EventSink(Process):
     def __init__(self, eventQueue):
         super(EventSink, self).__init__()
 
         self.commandQueue = Queue()
 
-        self.processors = [ConsolePrintProcessor(), ThreatProcessor()]
+        self.processors = [ConsolePrintProcessor(), ThreatProcessor(), LogEventProcessor()]
         self.eventQueue = eventQueue
 
     def run(self):
