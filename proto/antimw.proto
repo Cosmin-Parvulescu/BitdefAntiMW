@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package antimwpb;
+
+import "google/protobuf/timestamp.proto";
+
+message MessageDto {
+    oneof message {
+        ThreatEventDto threatEventDto = 1;
+        ThreatLogEventDto threatLogEventDto = 2;
+        LogEventDto logEventDto = 3;
+    }
+}
+
+message LogEventDto {
+    google.protobuf.Timestamp timestamp = 1;
+    string eventType = 2;
+    string additionalText = 3;
+}
+
+message ThreatLogEventDto {
+    google.protobuf.Timestamp timestamp = 1;
+    repeated ThreatEventDto threatEventDtos = 2;
+}
+
+message ThreatEventDto {
+    google.protobuf.Timestamp timestamp = 1;
+    string threatPath = 2;
+    string threatName = 3;
+}
