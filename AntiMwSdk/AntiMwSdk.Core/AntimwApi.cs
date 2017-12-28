@@ -1,26 +1,42 @@
-﻿using ZeroMQ;
+﻿using AntiMwSdk.Core.Ipc;
 
 namespace AntiMwSdk.Core
 {
     public class AntimwApi : IAntimwApi
     {
-        public string SendReq(string reqText)
-        {
-            using (var requester = new ZSocket(ZSocketType.REQ))
-            {
-                requester.Connect("tcp://localhost:2804");
-                requester.Send(new ZFrame(reqText));
+        private IIpcInput _ipc;
 
-                using (var reply = requester.ReceiveFrame())
-                {
-                    return reply.ReadString();
-                }
-            }
+        public AntimwApi(IIpcInput ipcInput)
+        {
+            _ipc = ipcInput;
+        }
+
+        public string StartRealTime()
+        {
+            return _ipc.SendCommand("START_REALTIME");
+        }
+
+        public string StopRealTime()
+        {
+            return _ipc.SendCommand("STOP_REALTIME");
+        }
+
+        public string StartOnDemand()
+        {
+            return _ipc.SendCommand("START_ONDEMAND");
+        }
+
+        public string StopOnDemand()
+        {
+            return _ipc.SendCommand("STOP_ONDEMAND");
         }
     }
 
     public interface IAntimwApi
     {
-        string SendReq(string reqText);
+        string StartRealTime();
+        string StopRealTime();
+        string StartOnDemand();
+        string StopOnDemand();
     }
 }

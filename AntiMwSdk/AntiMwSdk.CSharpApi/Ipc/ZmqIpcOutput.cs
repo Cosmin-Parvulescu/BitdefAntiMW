@@ -1,33 +1,27 @@
-﻿using Antimwpb;
-using Google.Protobuf;
-using System;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System;
+using Antimwpb;
+using AntiMwSdk.Core.Ipc;
+using System.Threading.Tasks;
 using System.Threading;
 using ZeroMQ;
 
-namespace AntiMwSdk.Core
+namespace AntiMwSdk.CSharpApi.Ipc
 {
-    public class AntimwConnectedSdk : AntimwSdk, IDisposable
+    public class ZmqIpcOutput : IIpcOutput, IDisposable
     {
-        private Thread _thread;
-        private CancellationTokenSource _cts = new CancellationTokenSource();
+        public event EventHandler<byte[]> IpcReceived;
 
-        private readonly IThreatHandler _threadHandler;
+        private readonly CancellationTokenSource _cts;
 
-        public AntimwConnectedSdk(IAntimwApi antimwApi, IThreatHandler threatHandler) : base(antimwApi)
+        public ZmqIpcOutput()
         {
-            _thread = new Thread(Listen);
-            _thread.Start(_cts.Token);
+            _cts = new CancellationTokenSource();
 
-            _threadHandler = threatHandler;
+            Task.Factory.StartNew(Listen, _cts.Token);
         }
 
-        private void Listen(object ct)
+        private void Listen()
         {
-            var cancellationToken = (CancellationToken)ct;
-
             using (var subscriber = new ZSocket(ZSocketType.SUB))
             {
                 subscriber.Connect("tcp://localhost:1405");
@@ -35,7 +29,7 @@ namespace AntiMwSdk.Core
 
                 while (true)
                 {
-                    if (cancellationToken.IsCancellationRequested)
+                    if (_cts.IsCancellationRequested)
                     {
                         break;
                     }
@@ -48,24 +42,10 @@ namespace AntiMwSdk.Core
                             {
                                 var replyBytes = replyFrame.Read();
 
-                                var messageDto = MessageDto.Parser.ParseFrom(replyBytes);
-                                switch (messageDto.MessageCase)
-                                {
-                                    case MessageDto.MessageOneofCase.ThreatEventDto:
-                                        _threadHandler.Handle(messageDto.ThreatEventDto);
+                                var evt = IpcReceived;
+                                if (evt != null)
+                                    evt(this, replyBytes);
 
-                                        break;
-
-                                    case MessageDto.MessageOneofCase.ThreatLogEventDto:
-                                        _threadHandler.Handle(messageDto.ThreatLogEventDto);
-
-                                        break;
-
-                                    case MessageDto.MessageOneofCase.LogEventDto:
-                                        _threadHandler.Handle(messageDto.LogEventDto);
-
-                                        break;
-                                }
                             }
                         }
                     }
@@ -100,7 +80,7 @@ namespace AntiMwSdk.Core
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~AntimwConnectedSdk() {
+        // ~ZmqIpcOutput() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
         // }
